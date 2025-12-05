@@ -224,3 +224,16 @@ footer {
     color: #fff;
     text-decoration: underline; /* Add underline for better usability */
 }
+
+/* Scroll Animation Styles */
+.hidden-section {
+    opacity: 0;
+    transform: translateY(50px); /* Start 50px below final position */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, transform; /* Optimize for animations */
+}
+
+.visible-section {
+    opacity: 1;
+    transform: translateY(0); /* Move to final position */
+}
