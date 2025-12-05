@@ -409,12 +409,6 @@ function selectAnswer(e) {
         // This is the last question, prepare for submission
         nextButton.textContent = 'Submit';
         nextButton.classList.remove('hide');
-        userAnswers[currentQuestionIndex] = {
-            question: shuffledQuestions[currentQuestionIndex].question,
-            selected: selectedButton.textContent,
-            correctAnswer: shuffledQuestions[currentQuestionIndex].answers.find(a => a.correct).text,
-            isCorrect: isCorrect
-        };
     }
 }
 
@@ -431,12 +425,25 @@ function showResult() {
             <h3>Review Your Answers</h3>
     `;
 
-    userAnswers.forEach((answer, index) => {
+    shuffledQuestions.forEach((question, index) => {
+        const answer = userAnswers[index];
         resultHTML += `
             <div class="review-question">
-                <p>Question ${index + 1}: ${answer.question}</p>
+                <p>Question ${index + 1}: ${question.question}</p>
+        `;
+        if (answer) {
+            resultHTML += `
                 <div class="review-answer">Your answer: ${answer.selected} ${answer.isCorrect ? '✔️' : '❌'}</div>
                 ${!answer.isCorrect ? `<div class="review-answer correct-answer">Correct answer: ${answer.correctAnswer}</div>` : ''}
+            `;
+        } else {
+            const correctAnswerText = question.answers.find(a => a.correct).text;
+            resultHTML += `
+                <div class="review-answer">Your answer: (Not answered) ❌</div>
+                <div class="review-answer correct-answer">Correct answer: ${correctAnswerText}</div>
+            `;
+        }
+        resultHTML += `
             </div>
         `;
     });
